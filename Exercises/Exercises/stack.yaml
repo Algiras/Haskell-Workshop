@@ -1,0 +1,6 @@
+flags: {}
+packages:
+- .
+extra-deps:
+- yaml-config-0.4.0
+resolver: lts-12.21
