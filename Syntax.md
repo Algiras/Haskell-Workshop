@@ -1,40 +1,55 @@
 # Syntax
 
-Based on this [CheatSheet](http://cheatsheet.codeslower.com/CheatSheet.pdf).
+Based on this [CheatSheet](http://cheatsheet.codeslower.com/CheatSheet.pdf) and [Haskell Wiki](https://wiki.haskell.org/Haskell).
 
-## Values
+## Terminology
 
-`::` can be read as "has type". Functions in `Haskell` are declared as series of `equations`.
+- `::` - has type
+  - `5 :: Integer` = 5 `has type` `Integer`
+- `type`
+  - `type String = [Char]` - alias for type `String` is `List`(`[]`) of `Char`
+- `Algebraic data type`
+  - `product type` 
+    - `data Option a = Some a | None` = product type `Option` of `*` type has 2 constructors `Some` and `None`. `Some` constructor takes an argument that describes type of `Option`.
+    - `(Int, String)` = tuple consisting out of `Int` and `String`. [tuple docs](http://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Tuple.html)
+- `Lambda` - anonymous function, that can be expressed without giving it a name
+  - `\a b -> a + b` = lambda function that takes 2 parameters that support `+` operation
 
-```haskell
+## Module
 
-type String = [Char]
-type List a = Cons a (List a) | Nil
-
-5 :: Integer
-'a' :: Char
-inc :: Integer -> Integer
-[1, 2, 3] :: [Integer]
-('b', 4) :: (Char, Integer)
-```
-
-### Lambdas
-
-Anonymous functions or `lambda expressions` are noted as
-
-```xml
-\<function-params> -> <function-implementation>
-```
+`module {Module_Name} where` needs to be at the top of every file to describe the name of the Module. In cases where applicable using `module {Module_Name} ({function-in-scope-1}, {function-in-scope-2}) where` syntax we can select parts of the code to export.
 
 ```haskell
-\c -> c
+module MyModule (remove_e, add_two) where
+
+add_one blah = blah + 1 -- module does not export this
+
+remove_e text = filter (/= 'e') text
+
+add_two blah = add_one . add_one $ blah
+```
+
+## Imports
+
+Supposing that the module `Mod` exports three functions `x`, `y`, `z`.
+We can either import all values `import Mod` or select particular function`import Mod (x, y)`. For more options read [AdditionalResource](/AdditionalResources.md#Imports)
+
+## Language pragmas
+
+A language pragma directs the Haskell compiler to enable an extension or modification of the Haskell language.
+
+```haskell
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
+-- OR
+{-# LANGUAGE OverloadedStrings, TemplateHaskell #-}
 ```
 
 ## User defined types
 
 ```xml
-data <Pascal-case-name> = <first-constructor> | <second-constructor>
-data <Pascal-case-name> <letter-denoting-type> = <first-constructor> <letter-denoting-type> | <second-constructor>
+| data <Pascal-case-name> = <first-constructor>                                               | <second-constructor> |
+| data <Pascal-case-name> <letter-denoting-type> = <first-constructor> <letter-denoting-type> | <second-constructor> |
 ```
 
 ```haskell
@@ -42,52 +57,12 @@ data <Pascal-case-name> <letter-denoting-type> = <first-constructor> <letter-den
 data Color = Red | Green | Blue
 data Point a = Pnt a a
 data Tree a = Leaf a | Branch (Tree a) (Tree a)
-```
 
-## Scoped values
-
-```xml
-let <reference-name> = <reference-value>
-    <reference-name-2> = <reference-value-2>
-    in <expression-using-all-named-references>
-```
-
-```haskell
-someValue = let y = 1 + 2
-                z = 4 + 5
-                in y + z
-
-someValue = let {y = 1 + 2; z = 4 + 5} in y + z
-```
-
-## Type Classes
-
-```xml
-class <type-class-name> <generic-type-reference> where
-    <function1-name> :: <function1-type-signature>
-    <function2-name> <function2-param> = <function2-implementation>
-```
-
-```haskell
-class Eq a where
-    (==) :: a -> a -> Bool
-    (/=) :: a -> a -> Bool
-    (/=) a b = not (a == b)
-
--- in some cases you can automatically derive TypeClasses
-data Color = Black | White deriving (Eq)
-```
-
-### Type constrains on functions
-
-```xml
-<function-name> :: <constrain-and-name> => <name> -> <name>
-<function-name> <function-parameter> = <function-implementation>
-```
-
-```haskell
-add :: Num a => a -> a -> a
-add a b = a + b
+-- Records
+data Person = Person String Int deriving (Show)
+data BetterPerson = { name :: String
+                    , age  :: Int
+                    } deriving (Show)
 ```
 
 ## Control structures
@@ -163,6 +138,93 @@ len ls@(l: _) = "List starts with " ++ show l ++ " and is " ++ show (length ls) 
 len [] = "list is empty!"
 ```
 
+## Scoped values
+
+```xml
+let <value-name> = <value>
+    <value-name-2> = <value-2>
+    in <expression-using-all-named-values>
+```
+
+```haskell
+someValue = let y = 1 + 2
+                z = 4 + 5
+                in y + z
+
+someValue = let {y = 1 + 2; z = 4 + 5} in y + z
+```
+
+```xml
+<function-name> <params>
+  | <condition1> = <result1> |
+  | <condition2> = <result2> |
+  where <value-used-in-both-contexts> = <value>
+```
+
+```haskell
+hasVowel [] = False
+hasVowel (x:xs)
+  | x `elem` vowels = True |
+  | otherwise = False      |
+  where vowels = "AEIOUaeiou"
+```
+
+## Type Classes
+
+```xml
+class <type-class-name> <generic-type-reference> where
+    <function1-name> :: <function1-type-signature>
+    <function2-name> <function2-param> = <function2-implementation>
+```
+
+```haskell
+class Eq a where
+    (==) :: a -> a -> Bool
+    (/=) :: a -> a -> Bool
+    (/=) a b = not (a == b)
+
+-- in some cases you can automatically derive TypeClasses
+data Color = Black | White deriving (Eq)
+```
+
+### Type constrains on functions
+
+```xml
+<function-name> :: <constrain-and-name> => <name> -> <name>
+<function-name> <function-parameter> = <function-implementation>
+```
+
+```haskell
+add :: Num a => a -> a -> a
+add a b = a + b
+```
+
+### Type instances
+
+```xml
+instance <Constrains> => <type-class-name> <instance-name> where
+    <type-class-function1> = <type-class-function1-implementation>
+```
+
+```haskell
+data Either a b = Left a | Right b deriving (Show)
+
+instance Functor (Either e) where
+    fmap fn fa = case fa of
+        Right a -> Right $ fn a
+        Left e -> Left e
+
+instance Applicative (Either e) where
+    pure = Right
+    mFn <*> fa = case mFn of
+        Right fn -> fmap fn fa
+        Left e -> Left e
+
+instance Monad (Either e) where
+    fa >>= fn = case fa of
+        Right v -> fn v
+        Left e -> Left e
+```
 
 ## Other
 
@@ -175,9 +237,14 @@ len [] = "list is empty!"
                     , <fourth-expression-let-block>]
 ```
 
-
 ```haskell
 square :: [Integer]
 square = [x * y | x <- [1..10]
                 , y <- [1..20]]
 ```
+
+## Resources
+
+- [Learn you a Haskell for Great Good!](http://learnyouahaskell.com/chapters)
+- [Gentle introduction to Haskell](https://www.haskell.org/tutorial/haskell-98-tutorial.pdf)
+- [zvon.org](http://zvon.org/other/haskell/Outputsyntax/)

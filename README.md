@@ -5,5 +5,15 @@
 - [Setup](Setup.md)
 - [Syntax](Syntax.md)
 - Exercises
-  - [helloHaskell](helloHaskell.md)
-  - ...
+  - [helloHaskell](Exercises/helloHaskell.md)
+  - following exercises will all run using [Exercises project](/Exercises/Exercises)
+    - Exercise 1
+      - fill in the missing implementations to make the tests pass
+    - Exercise 2
+      - implement `Functor`, `Applicative`, `Monad` for `Option` by following type signatures
+    - Exercise 3
+      - choose one of `Reader`, `Writer`, `State` monads and implement it
+
+## Resources
+
+- <http://web.cecs.pdx.edu/~mpj/pubs/springschool95.pdf>
