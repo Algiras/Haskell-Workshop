@@ -14,6 +14,8 @@
     - Exercise 3
       - choose one of `Reader`, `Writer`, `State` monads and implement it
 
+After completing each exercise you can checkout the next phase branch and check your answers. There are 5 phases in total.
+
 ## Resources
 
 - <http://web.cecs.pdx.edu/~mpj/pubs/springschool95.pdf>
