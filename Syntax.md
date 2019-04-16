@@ -243,8 +243,21 @@ square = [x * y | x <- [1..10]
                 , y <- [1..20]]
 ```
 
+### Function Application
+
+- `.` - let's you express nested function. It's definition is `f (g x) = (f . g) x`
+- `$` - is a way to avoid parentheses. Instead of writing `putStrLn (show (1 + 1))` you can write `putStrLn $ show (1 + 1)`
+- `(+) vs +`
+  - `(+)` - works as a normal function. You pass 2 variables after it
+  - `+` - is an infix operation, that is used between the arguments it adds
+- `fn vs 'fn'`
+  - `fn` -  calls the function called `fn`
+  - `'fn'` - calls the same `fn` function, but as an infix operation similar to `+`
+
+
 ## Resources
 
 - [Learn you a Haskell for Great Good!](http://learnyouahaskell.com/chapters)
 - [Gentle introduction to Haskell](https://www.haskell.org/tutorial/haskell-98-tutorial.pdf)
 - [zvon.org](http://zvon.org/other/haskell/Outputsyntax/)
+- [Similar syntax description](http://www.haskellforall.com/2014/10/how-to-desugar-haskell-code.html)
