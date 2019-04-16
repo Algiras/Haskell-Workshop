@@ -7,6 +7,7 @@ Setup is based on: [The Haskell Tool Stack](https://docs.haskellstack.org/en/sta
 - Un*x operating systems:
   - `curl -sSL https://get.haskellstack.org/ | sh`
   - OR `wget -qO- https://get.haskellstack.org/ | sh`
+- macOS: `brew install haskell-stack`
 - Windows:
   [`Windows 64-bit Installer`](https://get.haskellstack.org/stable/windows-x86_64-installer.exe)
 
