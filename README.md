@@ -19,3 +19,4 @@ After completing each exercise you can checkout the next phase branch and check 
 ## Resources
 
 - <http://web.cecs.pdx.edu/~mpj/pubs/springschool95.pdf>
+- [Slides](https://docs.google.com/presentation/d/1TJseO7NbbNgfc6HIhPHP1UfN43QE4iNraqKL2SdrnT4/edit?usp=sharing)
