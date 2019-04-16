@@ -12,3 +12,6 @@ This file describes how to handle any issues that might happen during workshop a
 stack ./install.hs hie-8.4.4
 stack ./install.hs build-doc-8.4.4
 ```
+
+- My `ghc-mod` local version is not matching `hie` version, is there a way to use `stack's ghc`?
+  - Yes. Just start `VSCode` using `stack exec -- code .` on `/Exercises/Exercises` directory.
