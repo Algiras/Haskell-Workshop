@@ -17,7 +17,7 @@ For example to add tests you will need:
 
 1. Create a folder `test`
 2. Create main test file `Tests.hs`
-3. in `package.yaml` add:
+3. in `package.yaml` find code below and add `hspec` to dependencies:
 
 ```yaml
 tests:
@@ -48,4 +48,4 @@ specs = describe "Test cases" $ do
           sayHello "World"  `shouldBe` "hello World"
 ```
 
-6. Run `stack tests --file-watch`, `--file-watch` flag adds continues re-compile after every file change
+6. Run `stack test --file-watch`, `--file-watch` flag adds continues re-compile after every file change
